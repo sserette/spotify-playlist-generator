@@ -1,0 +1,20 @@
+{
+  "name": "spotify-playlist-generator",
+  "version": "0.0.0",
+  "description": "Generates ",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index",
+    "test": ""
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "connect-loki": "^1.1.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7"
+  }
+}
