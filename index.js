@@ -15,9 +15,14 @@ app.use(session({
     saveUninitialized: true
 }));
 
-// allow all files in public to be accessed without authentication
+// serve static files without authentication
 const path = require('path');
 app.use(express.static(path.join(__dirname, '/public')));
+
+// send user to landing page
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
+});
 
 // all routes after this must be accessed with proper authentication
 const authRouter = require('./auth-router.js');
@@ -31,5 +36,5 @@ for (let routerFile of routers) {
     app.use(router);
 }
 
-// start server on port 8889
-app.listen(process.env.PORT || 8889);
+// start server on port 8080
+app.listen(process.env.PORT || 8080);
