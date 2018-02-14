@@ -1,28 +1,29 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
 	<title>Spotify Recommender</title>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="styles/normalize.css">
-	<link rel="stylesheet" href="styles/main.css">
-</head>	
-	
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link href="./css/landing-page.css" rel="stylesheet">
+	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
 <body>
-	
-<main>	
-	<h1>Welcome to the Spotify recommender.</h1>
-	
-	<label>Song title:</label>
-	<input type="text">
-	<button>Search</button>
-</main>
-
-<footer>
-	<h5>Travis Bates, Steven Serette 2018</h3>
-</footer>
-
+	<div class="wrapper">
+		<div class="video-container">
+			<div class="overlay"></div>
+			<video autoplay loop muted class="background">
+				<source src="./media/timelapse.mp4" type="video/mp4">
+			</video>
+		</div>
+		<section class="container text-center intro-text masthead">
+			<h1 class="main-title">Welcome to the Spotify Recommender!</h1>
+			<a href="/api/auth" class="btn btn-primary btn-xl">Authenticate</a>
+			<a class="row">Learn more</a>
+		</section>
+	</div>	
+	<footer class="text-center">
+		<h4>Travis Bates <a href="https://github.com/travishbates" target="_blank">@travishbates</a> and Steven Serette <a href="https://github.com/sserette" target="_blank">@serette</a>, 2018</h4>
+	</footer>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
-
 </html>
