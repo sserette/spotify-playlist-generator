@@ -28,6 +28,10 @@ app.get('/', function(req, res) {
 const authRouter = require('./auth-router.js');
 app.use(authRouter);
 
+app.get('/app', function(req, res) {
+    res.sendFile(path.join(__dirname + '/views/app.html'));
+});
+
 // enable any other routers defined in the routers folder
 const fs = require('fs');
 const routers = fs.readdirSync('routers');

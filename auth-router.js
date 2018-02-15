@@ -26,9 +26,9 @@ authRouter.get('/api/callback', async function (req, res) {
     try {
         if(req.session.id === req.query.state) {
             const authData = await spotify.getAuthToken(req.query.code);
+            req.session.access_token = authData.access_token;
             res.cookie('accessToken', authData.access_token);
-            // TODO: send user to app
-            res.end();
+            res.redirect('/app');
         }
         else {
             res.status(400);

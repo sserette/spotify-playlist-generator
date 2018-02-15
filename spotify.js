@@ -16,5 +16,15 @@ module.exports = {
                 else resolve(res.body);
             });
         });
-    }
+    },
+    get: function(endpoint, access_token) {
+        return new Promise((resolve, reject) => {
+            request.get('https://' + path.join('api.spotify.com', endpoint))
+            .set('Authorization', 'Bearer ' + access_token)
+            .end(function(err, body) {
+                if(err) reject(err);
+                else resolve(body.text && JSON.parse(body.text));
+            });
+        });
+    } 
 };
