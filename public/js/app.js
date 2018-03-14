@@ -13,10 +13,23 @@ $(document).ready(function() {
 		
 		$.get(aiBaseURL + currTrackID, function(data) {
 			console.log(data);
-			});
+			
+			var table = document.getElementById("song-table");
+
+			for (var index = 0; index < data.length; index++)
+			{
+				var row = table.insertRow(0);
+
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+
+				cell1.innerHTML = data[index].name;
+				cell2.innerHTML = data[index].popularity;
+			}
+		});
 			
 		$.get(spotifyBaseURL + currTrackID, function(data) {
 			console.log(data);
-			});
+		});
     });
 });
