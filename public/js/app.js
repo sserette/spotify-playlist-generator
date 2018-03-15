@@ -5,8 +5,8 @@ $(document).ready(function() {
         console.log(data);
     });
 	
-	let aiBaseURL = "/api/ai?endpoint=";
-	let spotifyBaseURL = "/api/spotify?endpoint=/v1/recommendations?seed_tracks=";
+	let aiBaseURL = "/api/ai?endpoint="; //Move to back end
+	let spotifyBaseURL = "/api/spotify?endpoint=/v1/recommendations?seed_tracks="; //Move to back end
 	
 	$("#search-button").click(function(){
 		var currTrackID = document.getElementById("id-input").value;
@@ -15,6 +15,9 @@ $(document).ready(function() {
 			console.log(data);
 			
 			var table = document.getElementById("song-table");
+			
+			while (table.hasChildNodes())
+				table.removeChild(table.lastChild);
 
 			for (var index = 0; index < data.length; index++)
 			{

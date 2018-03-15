@@ -28,9 +28,19 @@ module.exports = {
 		for (var i = 0; i < numTracks; i++) {
 			var results = await spotify.get(baseURL + endpoint, access_token);
 			var trackArray = results.tracks;
+			
+			console.log(i + " ITERATION");
+			
+			for (var j = 0; j < trackArray.length; j++)
+				console.log(trackArray[j].name);
+			
 			var mostPopIndex = getIndexOfMostPopular(trackArray);
+			
 			popSongs.push(trackArray[mostPopIndex]);
+		
 			endpoint = trackArray[mostPopIndex].id;
+			//console.log("Endpoint");
+			//console.log(endpoint);
 		}
 		
 		return popSongs;
