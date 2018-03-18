@@ -4,7 +4,7 @@ table, td, th{
 }
 
 thead {
-    border-bottom: 3px solid black;
+    border-bottom: 4px solid black;
 }
 
 tr:nth-child(even) {
