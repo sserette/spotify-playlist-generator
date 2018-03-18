@@ -31,8 +31,7 @@ var getIndexOfMostPopular = function(trackArray, popSongs){
 		if (currentPop > trackArray[highestPopIndex].popularity && !inTrackArray(trackArray[i].id, popSongs))
 			highestPopIndex = i;
 	}
-	
-	console.log("Most pop: " + highestPopIndex);
+
 	return highestPopIndex;
 }
 
@@ -45,11 +44,6 @@ module.exports = {
 		for (var i = 0; i < numTracks; i++) {
 			var results = await spotify.get(baseURL + endpoint, access_token);
 			var trackArray = results.tracks;
-			
-			console.log(i + " ITERATION");
-			
-			for (var j = 0; j < trackArray.length; j++)
-				console.log(trackArray[j].name);
 			
 			if (trackArray){
 				var mostPopIndex = getIndexOfMostPopular(trackArray, popSongs);
