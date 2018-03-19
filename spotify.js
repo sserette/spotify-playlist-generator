@@ -17,9 +17,10 @@ module.exports = {
             });
         });
     },
-    get: function(endpoint, access_token) {
+    getRecommendations: function(seed_tracks, access_token) {
+        let endpoint = '/v1/recommendations?seed_tracks=';
         return new Promise((resolve, reject) => {
-            request.get('https://' + path.join('api.spotify.com', endpoint))
+            request.get('https://' + path.join('api.spotify.com', endpoint + seed_tracks))
             .set('Authorization', 'Bearer ' + access_token)
             .end(function(err, body) {
                 if(err) reject(err);

@@ -81,7 +81,7 @@ $(document).ready(function() {
     //});
 	
 	let aiBaseURL = "/api/ai?endpoint="; //Move to back end
-	let spotifyBaseURL = "/api/spotify?endpoint=/v1/recommendations?seed_tracks="; //Move to back end
+	let spotifyRecommendBaseURL = "/api/spotify/recommend?seed_tracks="; //Move to back end
 	
 	$("#search-button").click(function(){
 		var currTrackID = document.getElementById("id-input").value;
@@ -89,11 +89,11 @@ $(document).ready(function() {
 		clearTable("greedy-table");
 		clearTable("search-table");
 		
-		$.get(aiBaseURL + currTrackID, function(data) {	
-			populateTable("greedy-table", data);
-		});
+		// $.get(aiBaseURL + currTrackID, function(data) {	
+		// 	populateTable("greedy-table", data);
+		// });
 			
-		$.get(spotifyBaseURL + currTrackID, function(data) {
+		$.get(spotifyRecommendBaseURL + currTrackID, function(data) {
 			console.log(data);
 			populateTable("search-table", data.tracks);
 		});
