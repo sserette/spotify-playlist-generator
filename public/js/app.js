@@ -12,6 +12,13 @@ var insertTableHeader = function(table){
 	createAndAppend(headerRow, "Album");
 	createAndAppend(headerRow, "Artists");
 	createAndAppend(headerRow, "Popularity");
+	createAndAppend(headerRow, "Acousticness");
+	createAndAppend(headerRow, "Danceability");
+	createAndAppend(headerRow, "Energy");
+	createAndAppend(headerRow, "Instrumentalness");
+	createAndAppend(headerRow, "Mode");
+	createAndAppend(headerRow, "Tempo");
+	createAndAppend(headerRow, "Valence");
 }
 
 var clearTable = function(tableName){
@@ -44,6 +51,22 @@ var populateTable = function(tableName, data){
 		}
 
 		cell4.innerHTML = data[index].popularity;
+
+		var cell5 = row.insertCell(4);
+		var cell6 = row.insertCell(5);
+		var cell7 = row.insertCell(6);
+		var cell8 = row.insertCell(7);
+		var cell9 = row.insertCell(8);
+		var cell10 = row.insertCell(9);
+		var cell11 = row.insertCell(10);
+
+		cell5.innerHTML = data[index].acousticness;
+		cell6.innerHTML = data[index].danceability;
+		cell7.innerHTML = data[index].energy;
+		cell8.innerHTML = data[index].instrumentalness;
+		cell9.innerHTML = data[index].mode;
+		cell10.innerHTML = data[index].tempo;
+		cell11.innerHTML = data[index].valence;
 	}
 
 	//table header
