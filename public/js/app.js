@@ -80,7 +80,7 @@ $(document).ready(function() {
     //    console.log(data);
     //});
 	
-	let aiBaseURL = "/api/ai?endpoint="; //Move to back end
+	let aiBaseURL = "/api/ai/recommend?seed="; //Move to back end
 	let spotifyRecommendBaseURL = "/api/spotify/recommend?seed_tracks="; //Move to back end
 	
 	$("#search-button").click(function(){
@@ -89,9 +89,9 @@ $(document).ready(function() {
 		clearTable("greedy-table");
 		clearTable("search-table");
 		
-		// $.get(aiBaseURL + currTrackID, function(data) {	
-		// 	populateTable("greedy-table", data);
-		// });
+		$.get(aiBaseURL + currTrackID, function(data) {	
+			populateTable("greedy-table", data);
+		});
 			
 		$.get(spotifyRecommendBaseURL + currTrackID, function(data) {
 			console.log(data);

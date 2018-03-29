@@ -36,19 +36,19 @@ var getIndexOfMostPopular = function(trackArray, popSongs){
 }
 
 module.exports = {
-	get: async function(endpoint, access_token){
+	get: async function(seed, access_token){
 		var baseURL = "/v1/recommendations?seed_tracks=";
 		
 		var popSongs = new Array();
 		
 		for (var i = 0; i < numTracks; i++) {
-			var results = await spotify.get(baseURL + endpoint, access_token);
+			var results = await spotify.getRecommendations(seed, access_token);
 			var trackArray = results.tracks;
 			
 			if (trackArray){
 				var mostPopIndex = getIndexOfMostPopular(trackArray, popSongs);
 				popSongs.push(trackArray[mostPopIndex]);
-				endpoint = trackArray[mostPopIndex].id;
+				seed = trackArray[mostPopIndex].id;
 			}
 		}
 		
