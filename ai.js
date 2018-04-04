@@ -36,7 +36,7 @@ var getIndexOfMostPopular = function(trackArray, popSongs){
 }
 
 module.exports = {
-	get: async function(seed, access_token){
+	getGreedy: async function(seed, access_token){
 		var baseURL = "/v1/recommendations?seed_tracks=";
 		
 		var popSongs = new Array();

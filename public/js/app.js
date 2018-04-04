@@ -88,15 +88,21 @@ $(document).ready(function() {
 
 		clearTable("greedy-table");
 		clearTable("search-table");
-		
-		$.get(aiBaseURL + currTrackID, function(data) {	
-			populateTable("greedy-table", data);
-		});
-			
+
 		$.get(spotifyRecommendBaseURL + currTrackID, function(data) {
 			console.log(data);
 			populateTable("search-table", data.tracks);
 		});
+		
+		$.get("/api/ai/recommend-greedy?seed=" + currTrackID, function(data) {	
+			populateTable("greedy-table", data);
+		});
+
+		$.get("/api/ai/recommend-heuristic?seed=" + currTrackID, function(data) {	
+			populateTable("heuristic-table", data);
+		});
+
+		//Insert more AI methods here
 	});
 	
 	$('table').each(function () {
