@@ -12,13 +12,13 @@ var insertTableHeader = function(table){
 	createAndAppend(headerRow, "Album");
 	createAndAppend(headerRow, "Artists");
 	createAndAppend(headerRow, "Popularity");
-	createAndAppend(headerRow, "Acousticness");
-	createAndAppend(headerRow, "Danceability");
-	createAndAppend(headerRow, "Energy");
-	createAndAppend(headerRow, "Instrumentalness");
-	createAndAppend(headerRow, "Mode");
-	createAndAppend(headerRow, "Tempo");
-	createAndAppend(headerRow, "Valence");
+	//createAndAppend(headerRow, "Acousticness");
+	//createAndAppend(headerRow, "Danceability");
+	//createAndAppend(headerRow, "Energy");
+	//createAndAppend(headerRow, "Instrumentalness");
+	//createAndAppend(headerRow, "Mode");
+	//createAndAppend(headerRow, "Tempo");
+	//createAndAppend(headerRow, "Valence");
 }
 
 var clearTable = function(tableName){
