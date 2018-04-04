@@ -20,7 +20,7 @@ aiRouter.all('/api/ai/recommend-heuristic', async function (req, res) {
     try {
         let aiResult;
         if (req.method === 'GET') {
-            aiResult = await ai.getGreedy(req.query.seed, req.session.access_token); //change to get heuristic
+            aiResult = await ai.getHeuristic(req.query.seed, req.session.access_token); //change to get heuristic
         }
         res.json(aiResult);
     } catch (err) {

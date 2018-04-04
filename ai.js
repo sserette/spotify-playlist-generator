@@ -53,5 +53,25 @@ module.exports = {
 		}
 		
 		return popSongs;
+	},
+
+	getHeuristic: async function(seed, access_token){
+		var baseURL = "/v1/recommendations?seed_tracks=";
+		
+		var popSongs = new Array();
+		
+		//Modify code to create heuristic
+		for (var i = 0; i < numTracks; i++) {
+			var results = await spotify.getRecommendations(seed, access_token);
+			var trackArray = results.tracks;
+			
+			if (trackArray){
+				var mostPopIndex = getIndexOfMostPopular(trackArray, popSongs);
+				popSongs.push(trackArray[mostPopIndex]);
+				seed = trackArray[mostPopIndex].id;
+			}
+		}
+		
+		return popSongs;
 	}
 };
