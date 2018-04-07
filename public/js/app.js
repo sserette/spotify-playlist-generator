@@ -89,9 +89,14 @@ $(document).ready(function() {
 		clearTable("greedy-table");
 		clearTable("search-table");
 
-		$.get(spotifyRecommendBaseURL + currTrackID, function(data) {
+		//Got rid of the following to allow for a "numTracks" variable to be passed within ai.js (to keep fairness)
+		/*$.get(spotifyRecommendBaseURL + currTrackID, function(data) {
 			console.log(data);
 			populateTable("search-table", data.tracks);
+		});*/
+
+		$.get("/api/ai/recommend-standard?seed=" + currTrackID, function(data) {	
+			populateTable("search-table", data);
 		});
 		
 		$.get("/api/ai/recommend-greedy-best-first?seed=" + currTrackID, function(data) {	

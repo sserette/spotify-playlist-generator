@@ -19,7 +19,6 @@ module.exports = {
     },
     getRecommendations: function(seed_tracks, limit, access_token) {
         let endpoint = '/v1/recommendations?seed_tracks=';
-        console.log(limit);
         return new Promise((resolve, reject) => {
             request.get('https://' + path.join('api.spotify.com', endpoint + seed_tracks + "&limit=" + limit))
             .set('Authorization', 'Bearer ' + access_token)

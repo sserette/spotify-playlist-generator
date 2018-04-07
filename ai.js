@@ -36,6 +36,15 @@ var getIndexOfMostPopular = function(trackArray, popSongs){
 }
 
 module.exports = {
+	getStandard: async function(seed, access_token){
+		var baseURL = "/v1/recommendations?seed_tracks=";
+	
+		var results = await spotify.getRecommendations(seed, numTracks, access_token);
+		var trackArray = results.tracks;
+		
+		return trackArray;
+	},
+
 	getGreedyBestFirst: async function(seed, access_token){
 		var baseURL = "/v1/recommendations?seed_tracks=";
 		
