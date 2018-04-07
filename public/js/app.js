@@ -69,6 +69,12 @@ var populateTable = function(tableName, data){
 		//cell11.innerHTML = data[index].valence;
 	}
 
+	var row = table.insertRow(table.row.length);
+	var footer = row.insertCell(3);
+	averagePopularity = totalPopularity / data.length;
+	footer.innerHTML = averagePopularity;
+
+
 	//table header
 	insertTableHeader(table);
 }
@@ -88,6 +94,7 @@ $(document).ready(function() {
 
 		clearTable("greedy-table");
 		clearTable("search-table");
+		clearTable('a-star-table');
 
 		//Got rid of the following to allow for a "numTracks" variable to be passed within ai.js (to keep fairness)
 		/*$.get(spotifyRecommendBaseURL + currTrackID, function(data) {
@@ -105,6 +112,10 @@ $(document).ready(function() {
 
 		$.get("/api/ai/recommend-heuristic?seed=" + currTrackID, function(data) {	
 			populateTable("heuristic-table", data);
+		});
+
+		$.get('/api/ai/recommend-a-star?seed=' + currTrackID, function(data) {
+			populateTable('a-star-table', data);
 		});
 
 		//Insert more AI methods here

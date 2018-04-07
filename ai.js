@@ -11,6 +11,16 @@ var inTrackArray = function(id, trackArray){
 	return false;
 }
 
+var hashSongs = function(trackArray) {
+	let songsTable = {};
+	if(trackArray) {
+		for(let track of trackArray) {
+			songsTable[track.id] = track.id;
+		}
+	}
+	return songsTable;
+}
+
 var getIndexOfMostPopular = function(trackArray, popSongs){
 	if (!trackArray)
 		console.log("No tracks in array in getIndexOfMostPopular");
@@ -33,6 +43,26 @@ var getIndexOfMostPopular = function(trackArray, popSongs){
 	}
 
 	return highestPopIndex;
+}
+
+var getHeuristicIndex = function(trackArray, popSongs) {
+	if(!trackArray) {
+		console.error('No tracks in array in getAStarIndex');
+	}
+	let popTable = hashSongs(popSongs);
+	let heuristicIndex = 0;
+	let sumValue = 0;
+	for(let track of popSongs) {
+		sumValue += track.popularity;
+	}
+	let avgValue = sumValue / popSongs.length;
+	for(let i = 1; i < trackArray.length; i++) {
+		let heuristicValue = trackArray[heuristicIndex].popularity + avgValue;
+		if(Math.abs(trackArray[i].popularity + avgValue) > heuristicValue && !popTable[trackArray[i].id]) {
+			heuristicIndex = i;
+		}
+	}
+	return heuristicIndex;
 }
 
 module.exports = {
@@ -62,6 +92,25 @@ module.exports = {
 		}
 		
 		return popSongs;
+	},
+
+	getAStar: async function(seed, access_token){
+		let baseURL = "/v1/recommendations?seed_tracks=";
+		
+		let heuristicSongs = new Array();
+		
+		for (var i = 0; i < numTracks; i++) {
+			let results = await spotify.getRecommendations(seed, numTracks, access_token);
+			let trackArray = results.tracks;
+			
+			if (trackArray){
+				let heuristicIndex = getHeuristicIndex(trackArray, heuristicSongs);
+				heuristicSongs.push(trackArray[heuristicIndex]);
+				seed = trackArray[heuristicIndex].id;
+			}
+		}
+		
+		return heuristicSongs;
 	},
 
 	getHeuristic: async function(seed, access_token){
