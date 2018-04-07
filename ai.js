@@ -1,6 +1,6 @@
 const spotify = require(`${process.cwd()}/spotify`);
 
-var numTracks = 20;
+var numTracks = 10;
 
 var inTrackArray = function(id, trackArray){
 	if (trackArray)
@@ -45,7 +45,7 @@ module.exports = {
 		return trackArray;
 	},
 
-	getGreedyBestFirst: async function(seed, access_token){
+	getDepthFirst: async function(seed, access_token){
 		var baseURL = "/v1/recommendations?seed_tracks=";
 		
 		var popSongs = new Array();

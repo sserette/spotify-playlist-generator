@@ -86,7 +86,7 @@ $(document).ready(function() {
 	$("#search-button").click(function(){
 		var currTrackID = document.getElementById("id-input").value;
 
-		clearTable("greedy-table");
+		clearTable("depth-first-table");
 		clearTable("search-table");
 
 		//Got rid of the following to allow for a "numTracks" variable to be passed within ai.js (to keep fairness)
@@ -99,8 +99,8 @@ $(document).ready(function() {
 			populateTable("search-table", data);
 		});
 		
-		$.get("/api/ai/recommend-greedy-best-first?seed=" + currTrackID, function(data) {	
-			populateTable("greedy-table", data);
+		$.get("/api/ai/recommend-depth-first?seed=" + currTrackID, function(data) {	
+			populateTable("depth-first-table", data);
 		});
 
 		$.get("/api/ai/recommend-heuristic?seed=" + currTrackID, function(data) {	
