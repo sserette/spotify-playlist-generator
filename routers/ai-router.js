@@ -16,11 +16,11 @@ aiRouter.all('/api/ai/recommend-standard', async function (req, res) {
     }
 });
 
-aiRouter.all('/api/ai/recommend-greedy-best-first', async function (req, res) {
+aiRouter.all('/api/ai/recommend-depth-first', async function (req, res) {
     try {
         let aiResult;
         if (req.method === 'GET') {
-            aiResult = await ai.getGreedyBestFirst(req.query.seed, req.session.access_token);
+            aiResult = await ai.getDepthFirst(req.query.seed, req.session.access_token);
         }
         res.json(aiResult);
     } catch (err) {
