@@ -6,7 +6,7 @@ spotifyRouter.get('/api/spotify/recommend', async function (req, res) {
     try {
         let spotifyResult;
         if (req.method === 'GET') {
-            spotifyResult = await spotify.getRecommendations(req.query.seed_tracks, req.session.access_token);
+            spotifyResult = await spotify.getRecommendations(req.query.seed_tracks, req.query.numTracks, req.session.access_token);
         }
         res.json(spotifyResult);
     } catch (err) {

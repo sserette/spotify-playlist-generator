@@ -94,7 +94,7 @@ $(document).ready(function() {
 			populateTable("search-table", data.tracks);
 		});
 		
-		$.get("/api/ai/recommend-greedy?seed=" + currTrackID, function(data) {	
+		$.get("/api/ai/recommend-greedy-best-first?seed=" + currTrackID, function(data) {	
 			populateTable("greedy-table", data);
 		});
 

@@ -1,6 +1,6 @@
 const spotify = require(`${process.cwd()}/spotify`);
 
-var numTracks = 10;
+var numTracks = 20;
 
 var inTrackArray = function(id, trackArray){
 	if (trackArray)
@@ -36,13 +36,13 @@ var getIndexOfMostPopular = function(trackArray, popSongs){
 }
 
 module.exports = {
-	getGreedy: async function(seed, access_token){
+	getGreedyBestFirst: async function(seed, access_token){
 		var baseURL = "/v1/recommendations?seed_tracks=";
 		
 		var popSongs = new Array();
 		
 		for (var i = 0; i < numTracks; i++) {
-			var results = await spotify.getRecommendations(seed, access_token);
+			var results = await spotify.getRecommendations(seed, numTracks, access_token);
 			var trackArray = results.tracks;
 			
 			if (trackArray){
@@ -62,7 +62,7 @@ module.exports = {
 		
 		//Modify code to create heuristic
 		for (var i = 0; i < numTracks; i++) {
-			var results = await spotify.getRecommendations(seed, access_token);
+			var results = await spotify.getRecommendations(seed, numTracks, access_token);
 			var trackArray = results.tracks;
 			
 			if (trackArray){
