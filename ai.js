@@ -45,6 +45,111 @@ var getIndexOfMostPopular = function(trackArray, popSongs){
 	return highestPopIndex;
 }
 
+/*
+	Pre: 	frontier is an array of states with frontier.length > 0
+			state is a state in frontier
+	Post:	return and remove state from frontier using the splice function
+*/
+var removeFromFrontier = function(frontier, state) {
+	for (var i = 0; i < frontier.length; i++)
+		if (frontier[i].id == state.id) {
+			var removedState = frontier[i];
+			frontier.splice(i, 1);
+			return removedState;
+		}
+}
+
+
+/*
+	Pre:	states is an array of states that all have a depth and path cost
+	Pre:	return the state that has the lowest average cost, where cost = pathCost / depth
+*/
+var selectStateAverageHeuristic = function(states) {
+	var leastIndex = 0;
+	var least = 0;
+
+	if (states[0].depth > 0)
+		var least = states[0].pathCost / states[0].depth;
+
+	for (var i = 1; i < states.length; i++) {
+		var cost = states[i].pathCost / states[i].depth;
+		if (cost < least) {
+			least = cost;
+			leastIndex = i;
+		}
+	}
+	
+	return states[leastIndex];
+}
+
+/*
+	Pre: 	leafState is a leaf node that passed the goal test
+	Post:	return an array of states with a length of numTracks by adding each successive parent to the array
+*/
+var getPlaylist = function(leafState) {
+	var playlist = new Array();
+
+	var currState = leafState;
+
+	while (playlist.length < numTracks) {
+		playlist.push(currState);
+		currState = currState.parent;
+	}
+
+	return playlist;
+}
+
+/*
+	Pre:	initialState is the initial state of the graph search to be performed
+			selectionFunction is a function that can return a state from a given set of states
+	Post:	return the array of states that is the completed graph search based on the initial state and selectionFunction given
+*/
+var graphSearch = async function(initialId, selectionFunction, access_token) {
+	var initialState = new Object;
+	initialState.id = initialId;
+	initialState.popularity = 0;
+	initialState.depth = 0;
+	initialState.pathCost = 0;
+
+	var frontier = new Array();
+	frontier.push(initialState); //Initialize the frontier using the initial state
+	var explored = new Array(); //Initialize the explored set to be empty
+
+	var debugCount = 0;
+
+	while (frontier.length > 0) {
+		debugCount++;
+		console.log("Debug ct: " + debugCount + "    Frontier size: " + frontier.length);
+
+		var selectedState = selectionFunction(frontier); //Choose a leaf node
+		removeFromFrontier(frontier, selectedState); //Remove it from the frontier
+
+
+		if (selectedState.depth == numTracks)
+			return getPlaylist(selectedState);
+
+		explored.push(selectedState);
+		var results = await spotify.getRecommendations(selectedState.id, numTracks, access_token);
+		expandedStates = results.tracks
+
+		for (var i = 0; i < expandedStates.length; i++) {
+			var currState = expandedStates[i];
+
+			if (!inTrackArray(currState.id, explored) && !inTrackArray(currState.id, frontier)) {
+				currState.parent = selectedState;
+				currState.pathCost = selectedState.pathCost + (100 - currState.popularity);
+				currState.depth = selectedState.depth + 1;
+				frontier.push(currState);
+			}
+		}
+	}
+
+	//Search did not find a goal state, so return the initialState by itself in an array.
+	var failArray = new Array();
+	failArray.push(initialState);
+	return failArray;
+}
+
 var getHeuristicIndex = function(trackArray, popSongs) {
 	if(!trackArray) {
 		console.error('No tracks in array in getAStarIndex');
@@ -113,23 +218,7 @@ module.exports = {
 		return heuristicSongs;
 	},
 
-	getHeuristic: async function(seed, access_token){
-		var baseURL = "/v1/recommendations?seed_tracks=";
-		
-		var popSongs = new Array();
-		
-		//Modify code to create heuristic
-		for (var i = 0; i < numTracks; i++) {
-			var results = await spotify.getRecommendations(seed, numTracks, access_token);
-			var trackArray = results.tracks;
-			
-			if (trackArray){
-				var mostPopIndex = getIndexOfMostPopular(trackArray, popSongs);
-				popSongs.push(trackArray[mostPopIndex]);
-				seed = trackArray[mostPopIndex].id;
-			}
-		}
-		
-		return popSongs;
+	getHeuristic: async function(seed, access_token) {
+		return graphSearch(seed, selectStateAverageHeuristic, access_token);
 	}
 };
