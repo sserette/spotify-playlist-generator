@@ -16,4 +16,18 @@ spotifyRouter.get('/api/spotify/recommend', async function (req, res) {
     }
 });
 
+spotifyRouter.get('/api/spotify/track', async function (req, res) {
+    try {
+        let spotifyResult;
+        if (req.method === 'GET') {
+            spotifyResult = await spotify.getTrack(req.query.trackId, req.session.access_token);
+        }
+        res.json(spotifyResult);
+    } catch (err) {
+        res.status(500);
+        res.end();
+        //console.error(err);
+    }
+});
+
 module.exports = spotifyRouter;

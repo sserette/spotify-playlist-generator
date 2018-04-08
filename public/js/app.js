@@ -4,7 +4,7 @@ var createAndAppend = function(row, name){
 	row.appendChild(cell);
 }
 
-var insertTableHeader = function(table){
+var insertSearchTableHeader = function(table){
 	var header = table.createTHead();
 	var headerRow = header.insertRow(0);  
 
@@ -28,7 +28,7 @@ var clearTable = function(tableName){
 		table.removeChild(table.lastChild);
 }
 
-var populateTable = function(tableName, data){
+var populateSearchTable = function(tableName, data){
 	var table = document.getElementById(tableName);
 
 	for (var index = 0; index < data.length; index++)
@@ -83,7 +83,55 @@ var populateTable = function(tableName, data){
 	footer.innerHTML = "<b>" + averagePopularity + "</b>";
 
 	//table header
-	insertTableHeader(table);
+	insertSearchTableHeader(table);
+}
+
+var insertTestTableHeader = function(table){
+	var header = table.createTHead();
+	var headerRow = header.insertRow(0);  
+
+	createAndAppend(headerRow, "Initial Song");
+	createAndAppend(headerRow, "Result Songs");
+	createAndAppend(headerRow, "Average Popularity");
+}
+
+var populateTestTable = function(tableName, data){
+	var table = document.getElementById(tableName);
+
+	for (var index = 0; index < data.length; index++)
+	{
+		var row = table.insertRow(table.rows.length);
+
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+
+		cell1.innerHTML = data[index].initialTrack;
+		cell2.innerHTML = data[index].resultTracks;
+		cell3.innerHTML = data[index].averagePopularity;
+	}
+
+	var totalPopularity = 0;
+
+	for (var i = 0; i < data.length; i++)
+		totalPopularity += data[i].averagePopularity;
+
+	row = table.insertRow(table.rows.length);
+	var footer = row.insertCell(0);
+	footer = row.insertCell(1);
+	footer = row.insertCell(2);
+	var averagePopularity = totalPopularity / data.length;
+	footer.innerHTML = "<b>" + averagePopularity + "</b>";
+
+	//table header
+	insertTestTableHeader(table);
+}
+
+var setDisplayOfClassElements = function(className, visibility) {
+	var array = document.getElementsByClassName(className);
+
+	for (var i = 0; i < array.length; i++)
+		array[i].style.visibility = visibility;
 }
 
 $(document).ready(function() {
@@ -96,43 +144,71 @@ $(document).ready(function() {
 	let aiBaseURL = "/api/ai/recommend?seed="; //Move to back end
 	let spotifyRecommendBaseURL = "/api/spotify/recommend?seed_tracks="; //Move to back end
 	
-	$("#search-button").click(function(){
+	$("#search-button").click(function() {
+		$(".search-tables").show();
+		$(".test-tables").hide();
+
 		var currTrackID = document.getElementById("id-input").value;
 
 		clearTable("depth-first-table");
 		clearTable("search-table");
-		clearTable('a-star-table');
+		//clearTable('a-star-table');
+		clearTable("a-star-mean-popularity-table");
 
 		//Got rid of the following to allow for a "numTracks" variable to be passed within ai.js (to keep fairness)
 		/*$.get(spotifyRecommendBaseURL + currTrackID, function(data) {
 			console.log(data);
-			populateTable("search-table", data.tracks);
+			populateSearchTable("search-table", data.tracks);
 		});*/
 
 		$.get("/api/ai/recommend-standard?seed=" + currTrackID, function(data) {	
-			populateTable("search-table", data);
+			populateSearchTable("search-table", data);
 		});
 		
 		$.get("/api/ai/recommend-depth-first?seed=" + currTrackID, function(data) {	
-			populateTable("depth-first-table", data);
+			populateSearchTable("depth-first-table", data);
 		});
 
-		$.get("/api/ai/recommend-heuristic?seed=" + currTrackID, function(data) {	
-			populateTable("heuristic-table", data);
+		$.get("/api/ai/recommend-a-star-mean-popularity?seed=" + currTrackID, function(data) {	
+			populateSearchTable("a-star-mean-popularity-table", data);
 		});
 
+		/*
 		$.get('/api/ai/recommend-a-star?seed=' + currTrackID, function(data) {
-			populateTable('a-star-table', data);
+			populateSearchTable('a-star-table', data);
+		});
+		*/
+	});
+
+	$("#test-button").click(function() {
+		//setDisplayOfClassElements("search-tables", "hidden");
+		//setDisplayOfClassElements("test-tables", "visible");
+		$(".search-tables").hide();
+		$(".test-tables").show();
+
+		clearTable("testing-depth-first-table");
+		clearTable("testing-search-table");
+		clearTable("testing-a-star-mean-popularity-table");
+
+		$.get("/api/ai/recommend-standard-tests", function(data) {	
+			populateTestTable("testing-search-table", data);
 		});
 
-		//Insert more AI methods here
+		$.get("/api/ai/recommend-depth-first-tests", function(data) {	
+			populateTestTable("testing-depth-first-table", data);
+		});
+
+		$.get("/api/ai/recommend-a-star-mean-popularity-tests", function(data) {	
+			populateTestTable("testing-a-star-mean-popularity-table", data);
+		});
 	});
 	
 	$('table').each(function () {
         var $table = $(this);
 
         var $button = $("<button type='button'>");
-        $button.text("Export to spreadsheet");
+		$button.text("Export to spreadsheet");
+		$button.addClass($table.attr("class"));
         $button.insertBefore($table);
 
         $button.click(function () {
@@ -140,6 +216,9 @@ $(document).ready(function() {
                 delivery: 'value'
             });
             window.location.href = 'data:text/csv;charset=UTF-8,' + encodeURIComponent(csv);
-        });
+		});
+		
+		$table.hide();
+		$button.hide();
     });
 });

@@ -20,22 +20,26 @@
 	<p>Example song ID: 0c6xIDDpzE81m2q797ordA</p>
 	<input type="text" id="id-input" value="0c6xIDDpzE81m2q797ordA">
 	<button id="search-button">Search</button>
+	<br>
+	<button id="test-button">Test All Algorithms Against Test Track Set</button>
 </main>
 
 <h1>Standard Search Table</h1>
-<table id="search-table">
-</table>
+<table id="search-table" class="search-tables"></table>
+<table id="testing-search-table" class="test-tables"></table>
 
-<h1>Depth-First Table</h1>
-<table id="depth-first-table">
-</table>
+<h1>Depth-First Search Table</h1>
+<table id="depth-first-table" class="search-tables"></table>
+<table id="testing-depth-first-table" class="test-tables"></table>
 
+<!--
 <h1>A* Table</h1>
 <table id="a-star-table"></table>
+-->
 
-<h1>Heuristic Table</h1>
-<table id="heuristic-table">
-</table>
+<h1>Graph A* Mean Popularity Heuristic Search Table</h1>
+<table id="a-star-mean-popularity-table" class="search-tables"></table>
+<table id="testing-a-star-mean-popularity-table" class="test-tables"></table>
 
 <script src="/js/app.js"></script>
 

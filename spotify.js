@@ -27,5 +27,16 @@ module.exports = {
                 else resolve(body.text && JSON.parse(body.text));
             });
         });
+    },
+    getTrack: function(trackId, access_token) {
+        let endpoint = '/v1/tracks/';
+        return new Promise((resolve, reject) => {
+            request.get('https://' + path.join('api.spotify.com', endpoint + trackId))
+            .set('Authorization', 'Bearer ' + access_token)
+            .end(function(err, body) {
+                if(err) reject(err);
+                else resolve(body.text && JSON.parse(body.text));
+            });
+        });
     } 
 };
