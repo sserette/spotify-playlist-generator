@@ -69,11 +69,18 @@ var populateTable = function(tableName, data){
 		//cell11.innerHTML = data[index].valence;
 	}
 
-	var row = table.insertRow(table.row.length);
-	var footer = row.insertCell(3);
-	averagePopularity = totalPopularity / data.length;
-	footer.innerHTML = averagePopularity;
+	var totalPopularity = 0;
 
+	for (var i = 0; i < data.length; i++)
+		totalPopularity += data[i].popularity;
+
+	row = table.insertRow(table.rows.length);
+	var footer = row.insertCell(0);
+	footer = row.insertCell(1);
+	footer = row.insertCell(2);
+	footer = row.insertCell(3);
+	var averagePopularity = totalPopularity / data.length;
+	footer.innerHTML = "<b>" + averagePopularity + "</b>";
 
 	//table header
 	insertTableHeader(table);
