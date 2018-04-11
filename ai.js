@@ -40,7 +40,7 @@ var getTestTracks = async function(access_token) {
 
 	track = await spotify.getTrack("6tarvNiKnEjYMj1VZhlDqR", access_token); //Lil Yachty, Trippie Redd - 66
 	tracks.push(track);
-
+	/*
 	//Electronic/Dance
 	track = await spotify.getTrack("6OYjreGuIk79v0n5IvIy96", access_token); //Dropgun - Nobody
 	tracks.push(track);
@@ -51,7 +51,6 @@ var getTestTracks = async function(access_token) {
 	track = await spotify.getTrack("5vMAKJ78vhNtvbIKz4yeIY", access_token); //Don Diablo - Cutting Shapes
 	tracks.push(track);
 
-	/*
 	//80s
 	track = await spotify.getTrack("4YR6Dextuoc3I8nJ0XgzKI", access_token); //Kenny Loggins - Footloose
 	tracks.push(track);
@@ -249,7 +248,7 @@ var getArtistsString = function(track) {
 	for (var i = 0; i < track.artists.length; i++) {
 		string += track.artists[i].name;
 
-		if (i < track.artists[i].length - 1)
+		if (i < track.artists.length - 1)
 		string += ", ";
 	}
 
@@ -290,9 +289,15 @@ var runTestsGivenFunction = async function(func, access_token) {
 		var results = await func(currentTrack.id, access_token);
 		var tableRow = getTestTableRow(currentTrack, results);
 		data.push(tableRow);
+		sleep(3000);
 	}
 
 	return data;
+}
+
+var sleep = function(delay) {
+	var start = new Date().getTime()
+    while (new Date().getTime() < start + delay) ;
 }
 
 module.exports = {

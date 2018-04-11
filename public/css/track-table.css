@@ -1,11 +1,42 @@
+#header-image {
+    float: left;
+    width: 80px;
+}
+
+header {
+    height: 100px;
+}
+
+header h1 {
+    padding-top: 15px;
+}
+
 body {
     margin: 10px;
+    font-family: "Montserrat";
+    color: #B3B3B3;
 }
 
 button {
     margin-top: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
+    background-color: #1DB954;
+    color: white;
+    border-radius: 30px !important;
+    width: 15% !important;
+}
+
+#search-button {
+    width: 200px !important;
+}
+
+#test-button {
+    width: 400px !important;
+}
+
+body {
+    background-color: #121212;
 }
 
 table, td, th{
@@ -18,9 +49,9 @@ thead {
 }
 
 tr:nth-child(even) {
-    background: #CCC
+    background: #282828;
 }
 
 tr:nth-child(odd) {
-    background: #FFF
+    background: #181818;
 }
