@@ -38,5 +38,16 @@ module.exports = {
                 else resolve(body.text && JSON.parse(body.text));
             });
         });
-    } 
+    },
+    searchTrack: function(q, access_token) {
+        let endpoint = '/v1/search?type=track&q=';
+        return new Promise((resolve, reject) => {
+            request.get('https://' + path.join('api.spotify.com', endpoint + q))
+            .set('Authorization', 'Bearer ' + access_token)
+            .end(function(err, body) {
+                if(err) reject(err);
+                else resolve(body.text && JSON.parse(body.text));
+            });
+        });
+    }
 };

@@ -134,6 +134,38 @@ var setDisplayOfClassElements = function(className, visibility) {
 		array[i].style.visibility = visibility;
 }
 
+$.typeahead({
+    input: ".js-typeahead",
+    order: "asc",
+    display: ["name"],
+    dynamic: true,
+    emptyTemplate: 'No result for "{{query}}"',
+    template: function(query, item) {
+    	var artist = item.artists[0].name;
+    	var template = `{{name}} - ` + artist;
+    	return template;
+    },
+    source: {
+        groupName: {
+            ajax: {
+            	url: "/api/spotify/search",
+            	data: {
+            		q: '{{query}}'
+            	}
+            }
+        }
+    },
+    callback: {
+        onClickAfter: function (node, a, item, event) {
+            event.preventDefault;
+            currTrackID = item.id;
+        }
+    },
+    cancelButton: true
+});
+
+var currTrackID;
+
 $(document).ready(function() {
     //let url = "/api/spotify?endpoint=/v1/search?" + encodeURIComponent("q=bob&type=artist");
 	
@@ -148,7 +180,7 @@ $(document).ready(function() {
 		$(".search-tables").show();
 		$(".test-tables").hide();
 
-		var currTrackID = document.getElementById("id-input").value;
+		//var currTrackID = document.getElementById("id-input").value;
 
 		clearTable("depth-first-table");
 		clearTable("search-table");

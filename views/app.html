@@ -5,23 +5,37 @@
 <head>
 	<title>Spotify Recommender</title>
 	<meta charset="UTF-8">
-	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="/js/table2CSV.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/track-table.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.10.4/jquery.typeahead.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.10.4/jquery.typeahead.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>	
 	
 <body>
 	
 <main>	
 	<h1 id="title">Welcome to the Spotify recommender</h1>
-	<label id="song-title">Search for a song title:</label>
-	<input type="text" id="search-input">
-	<p>Know a song ID? Input it below!</p>
-	<p>Example song ID: 0c6xIDDpzE81m2q797ordA</p>
-	<input type="text" id="id-input" value="0c6xIDDpzE81m2q797ordA">
-	<button id="search-button">Search</button>
-	<br>
-	<button id="test-button">Test All Algorithms Against Test Track Set</button>
+	<div class="row">
+		<form class="col-md-4">
+		    <div class="typeahead__container">
+		        <div class="typeahead__field">
+		            <span class="typeahead__query">
+		            	<label id="song-title">Search for a song title:</label>
+		                <input class="js-typeahead"
+		                       name="q"
+		                       type="search"
+		                       autocomplete="off">
+		            </span>
+		        </div>
+		    </div>
+		</form>
+	</div>
+	<button class="btn btn-default" id="search-button">Search</button>
+	<button class="btn btn-default" id="test-button">Test All Algorithms Against Test Track Set</button>
 </main>
 
 <h1>Standard Search Table</h1>

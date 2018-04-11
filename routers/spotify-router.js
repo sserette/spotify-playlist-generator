@@ -30,4 +30,18 @@ spotifyRouter.get('/api/spotify/track', async function (req, res) {
     }
 });
 
+spotifyRouter.get('/api/spotify/search', async function (req, res) {
+    try {
+        let spotifyResult;
+        if (req.method === 'GET') {
+            spotifyResult = await spotify.searchTrack(req.query.q, req.session.access_token);
+        }
+        res.json(spotifyResult.tracks.items);
+    } catch (err) {
+        res.status(500);
+        res.end();
+        //console.error(err);
+    }
+});
+
 module.exports = spotifyRouter;
