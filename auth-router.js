@@ -11,7 +11,7 @@ authRouter.get('/api/auth', function (req, res) {
         response_type: 'code',
         redirect_uri: credentials.redirectUri,
         state: state,
-        scope: '',
+        scope: encodeURIComponent('playlist-modify-public playlist-modify-private'),
         show_dialog: 'true'
     };
     let authUrl = 'https://accounts.spotify.com/authorize?';

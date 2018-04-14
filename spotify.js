@@ -17,6 +17,17 @@ module.exports = {
             });
         });
     },
+    getUserInfo: function(access_token) {
+        let endpoint = '/v1/me';
+        return new Promise((resolve, reject) => {
+            request.get('https://' + path.join('api.spotify.com', endpoint))
+            .set('Authorization', 'Bearer ' + access_token)
+            .end(function(err, body) {
+                if(err) reject(err);
+                else resolve(body.text && JSON.parse(body.text));
+            });
+        });
+    },
     getRecommendations: function(seed_tracks, limit, access_token) {
         let endpoint = '/v1/recommendations?seed_tracks=';
         return new Promise((resolve, reject) => {
@@ -47,6 +58,32 @@ module.exports = {
             .end(function(err, body) {
                 if(err) reject(err);
                 else resolve(body.text && JSON.parse(body.text));
+            });
+        });
+    },
+    createPlaylist: function(userId, name, description, access_token) {
+        let endpoint = '/v1/users/' + userId + '/playlists';
+        return new Promise((resolve, reject) => {
+            request.post('https://' + path.join('api.spotify.com', endpoint))
+            .send({name: name, description: description, public: false})
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'Bearer ' + access_token)
+            .end((err, res) => {
+                if(err) reject(err);
+                else resolve(res.body);
+            });
+        });
+    },
+    addTracks: function(userId, playlistId, uris, access_token) {
+        let endpoint = '/v1/users/' + userId + '/playlists/' + playlistId + '/tracks';
+        return new Promise((resolve, reject) => {
+            request.post('https://' + path.join('api.spotify.com', endpoint))
+            .send({uris: uris})
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'Bearer ' + access_token)
+            .end((err, res) => {
+                if(err) reject(err);
+                else resolve(res.body);
             });
         });
     }

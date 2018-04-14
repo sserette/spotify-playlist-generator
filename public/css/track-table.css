@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Montserrat";
+    src: url(/css/Montserrat/Montserrat-Regular.ttf);
+}
+
 #header-image {
     float: left;
     width: 80px;
@@ -13,7 +18,7 @@ header h1 {
 
 body {
     margin: 10px;
-    font-family: "Montserrat";
+    font-family: "Montserrat", Helvativa, sans-serif;
     color: #B3B3B3;
 }
 
@@ -24,7 +29,15 @@ button {
     background-color: #1DB954;
     color: white;
     border-radius: 30px !important;
-    width: 15% !important;
+}
+
+.btn-playlist {
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: #1DB954;
+    color: white !important;
+    border-radius: 30px !important;
 }
 
 #search-button {

@@ -5,6 +5,9 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // store session data from client
 const session = require('express-session');
 const LokiStore = require('connect-loki')(session);

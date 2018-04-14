@@ -44,4 +44,37 @@ spotifyRouter.get('/api/spotify/search', async function (req, res) {
     }
 });
 
+spotifyRouter.post('/api/spotify/createPlaylist', async function (req, res) {
+    try {
+        let spotifyResult;
+        let userData;
+        if (req.method === 'POST') {
+            userData = await spotify.getUserInfo(req.session.access_token);
+            spotifyResult = await spotify.createPlaylist(userData.id, req.body.name, req.body.description, req.session.access_token);
+        }
+        res.json(spotifyResult);
+    } catch (err) {
+        res.status(500);
+        res.end();
+        //console.error(err);
+    }
+});
+
+spotifyRouter.post('/api/spotify/addTracks', async function (req, res) {
+    try {
+        let spotifyResult;
+        let userData;
+        if (req.method === 'POST') {
+            userData = await spotify.getUserInfo(req.session.access_token);
+            spotifyResult = await spotify.addTracks(userData.id, req.body.playlistId, req.body.uris, req.session.access_token);
+            spotifyResult.userId = userData.id;
+        }
+        res.json(spotifyResult);
+    } catch (err) {
+        res.status(500);
+        res.end();
+        //console.error(err);
+    }
+});
+
 module.exports = spotifyRouter;
