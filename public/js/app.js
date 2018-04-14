@@ -170,6 +170,7 @@ var exportToPlaylist = function(index) {
 				let success = document.getElementById('success-link');
 				success.href='https://open.spotify.com/user/' + data.userId + '/playlist/' + body.playlistId;
 				success.innerHTML = 'Check out your playlist here';
+				window.scrollTo(0, 0);
 			});
 		},
 		error: function(err) {
