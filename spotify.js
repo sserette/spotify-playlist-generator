@@ -2,6 +2,19 @@ const request = require('superagent');
 const path = require('path');
 const credentials = require(`${process.cwd()}/credentials.json`);
 
+var trackIdsString = function(tracks) {
+    var IdsString = "";
+
+    for (var i = 0; i < tracks.length; i++) {
+        IdsString += tracks[i].id;
+
+        if (i < tracks.length - 1)
+        IdsString += ","
+    }
+
+    return IdsString;
+}
+
 module.exports = {
     getAuthToken: function(authCode) {
         return new Promise((resolve, reject) => {
@@ -43,6 +56,28 @@ module.exports = {
         let endpoint = '/v1/tracks/';
         return new Promise((resolve, reject) => {
             request.get('https://' + path.join('api.spotify.com', endpoint + trackId))
+            .set('Authorization', 'Bearer ' + access_token)
+            .end(function(err, body) {
+                if(err) reject(err);
+                else resolve(body.text && JSON.parse(body.text));
+            });
+        });
+    },
+    getAudioFeaturesSingleTrack: function(track, access_token) {
+        let endpoint = '/v1/audio-features/';
+        return new Promise((resolve, reject) => {
+            request.get('https://' + path.join('api.spotify.com', endpoint + track.id))
+            .set('Authorization', 'Bearer ' + access_token)
+            .end(function(err, body) {
+                if(err) reject(err);
+                else resolve(body.text && JSON.parse(body.text));
+            });
+        });
+    },
+    getAudioFeaturesMultipleTracks: function(tracks, access_token) {
+        let endpoint = '/v1/audio-features/?ids=';
+        return new Promise((resolve, reject) => {
+            request.get('https://' + path.join('api.spotify.com', endpoint + trackIdsString(tracks)))
             .set('Authorization', 'Bearer ' + access_token)
             .end(function(err, body) {
                 if(err) reject(err);

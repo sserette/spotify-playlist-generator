@@ -11,10 +11,10 @@ var getTestTracks = async function(access_token) {
 
 	track = await spotify.getTrack("5MMnwYs0hIxkENRsbkWJ2G", access_token); //Deep Purple - Smoke On the Water
 	tracks.push(track);
-
+	/*
 	track = await spotify.getTrack("6J17MkMmuzBiIOjRH6MOBZ", access_token); //AC/DC - Rock and Roll Ain't Noise Pollution
 	tracks.push(track);
-
+	
 	track = await spotify.getTrack("3LTMnFa0hhwisyq6ILahyj", access_token); //Dire Straits - Sultans Of Swing
 	tracks.push(track);
 
@@ -40,7 +40,7 @@ var getTestTracks = async function(access_token) {
 
 	track = await spotify.getTrack("6tarvNiKnEjYMj1VZhlDqR", access_token); //Lil Yachty, Trippie Redd - 66
 	tracks.push(track);
-	/*
+	
 	//Electronic/Dance
 	track = await spotify.getTrack("6OYjreGuIk79v0n5IvIy96", access_token); //Dropgun - Nobody
 	tracks.push(track);
@@ -187,21 +187,25 @@ var graphSearch = async function(initialId, heuristicFunction, access_token) {
 	frontier.push(initialState); //Initialize the frontier using the initial state
 	var explored = new Array(); //Initialize the explored set to be empty
 
-	var debugCount = 0;
+	var numberOfRecommendations = 0;
 
 	while (frontier.length > 0) {
-		debugCount++;
-		console.log("Debug ct: " + debugCount + "    Frontier size: " + frontier.length);
+		console.log("Number of recommendations requests: " + numberOfRecommendations + "    Frontier size: " + frontier.length);
 
 		var selectedState = heuristicFunction(frontier); //Choose a leaf node
 		removeFromFrontier(frontier, selectedState); //Remove it from the frontier
 
+		if (selectedState.depth == numTracks) {
+			var searchResults = new Object();
+			searchResults.numberOfRecommendations = numberOfRecommendations;
+			searchResults.tracks = getPlaylist(selectedState);
 
-		if (selectedState.depth == numTracks)
-			return getPlaylist(selectedState);
+			return searchResults;
+		}
 
 		explored.push(selectedState);
 		var results = await spotify.getRecommendations(selectedState.id, numTracks, access_token);
+		numberOfRecommendations++;
 		expandedStates = results.tracks
 
 		for (var i = 0; i < expandedStates.length; i++) {
@@ -255,28 +259,37 @@ var getArtistsString = function(track) {
 	return string;
 }
 
-var getTestTableRow = function(initialTrack, tracks) {
-	tableRow = new Object;
+var getTestTableRows = function(initialTrack, initialTrackAudioFeatures, tracks, tracksAudioFeatures, numberOfRecommendations) {
+	var tableRows = new Array();
 
-	var popularitySum = 0;
-	var tracksString = "";
+	for (var trackNum = 0; trackNum < tracks.length; trackNum++) {
+		var tableRow = new Object();
+		tableRow.initialTrack = getArtistsString(initialTrack) + " - " + initialTrack.name;
+		tableRow.initialTrackPopularity = initialTrack.popularity;
+		tableRow.initialTrackDanceability = initialTrackAudioFeatures.danceability;
+		tableRow.initialTrackEnergy = initialTrackAudioFeatures.energy;
+		tableRow.initialTrackSpeechiness = initialTrackAudioFeatures.speechiness;
+		tableRow.initialTrackAcousticness = initialTrackAudioFeatures.acousticness;
+		tableRow.initialTrackInstrumentalness = initialTrackAudioFeatures.instrumentalness;
+		tableRow.initialTrackLiveness = initialTrackAudioFeatures.liveness;
+		tableRow.initialTrackValence = initialTrackAudioFeatures.valence;
 
-	for (var i = 0; i < tracks.length; i++) {
-		popularitySum += tracks[i].popularity;
+		tableRow.resultTrack = getArtistsString(tracks[trackNum]) + " - " + tracks[trackNum].name;
+		tableRow.resultTrackPopularity = tracks[trackNum].popularity;
+		tableRow.resultTrackDanceability = tracksAudioFeatures.audio_features[trackNum].danceability;
+		tableRow.resultTrackEnergy = tracksAudioFeatures.audio_features[trackNum].energy;
+		tableRow.resultTrackSpeechiness = tracksAudioFeatures.audio_features[trackNum].speechiness;
+		tableRow.resultTrackAcousticness = tracksAudioFeatures.audio_features[trackNum].acousticness;
+		tableRow.resultTrackInstrumentalness = tracksAudioFeatures.audio_features[trackNum].instrumentalness;
+		tableRow.resultTrackLiveness = tracksAudioFeatures.audio_features[trackNum].liveness;
+		tableRow.resultTrackValence = tracksAudioFeatures.audio_features[trackNum].valence;
 
-		tracksString += getArtistsString(tracks[i]);
+		tableRow.numberOfRecommendations = numberOfRecommendations;
 
-		tracksString += " - " + tracks[i].name;
-
-		if (i < tracks.length - 1)
-			tracksString += "<br>";
+		tableRows.push(tableRow);
 	}
 
-	tableRow.initialTrack = getArtistsString(initialTrack) + " - " + initialTrack.name;
-	tableRow.resultTracks = tracksString;
-	tableRow.averagePopularity = popularitySum / tracks.length;
-
-	return tableRow;
+	return tableRows;
 }
 
 var runTestsGivenFunction = async function(func, access_token) {
@@ -286,9 +299,11 @@ var runTestsGivenFunction = async function(func, access_token) {
 
 	for (var i = 0; i < testTracks.length; i++) {
 		var currentTrack = testTracks[i];
+		var currentTrackAudioFeatures = await spotify.getAudioFeaturesSingleTrack(currentTrack, access_token);
 		var results = await func(currentTrack.id, access_token);
-		var tableRow = getTestTableRow(currentTrack, results);
-		data.push(tableRow);
+		var ResultsAudioFeatures = await spotify.getAudioFeaturesMultipleTracks(results.tracks, access_token);
+		var tableRows = getTestTableRows(currentTrack, currentTrackAudioFeatures, results.tracks, ResultsAudioFeatures, results.numberOfRecommendations);
+		data.push(tableRows);
 		sleep(3000);
 	}
 
@@ -307,7 +322,11 @@ module.exports = {
 		var results = await spotify.getRecommendations(seed, numTracks, access_token);
 		var trackArray = results.tracks;
 		
-		return trackArray;
+		var searchResults = new Object();
+		searchResults.numberOfRecommendations = 1;
+		searchResults.tracks = trackArray;
+
+		return searchResults;
 	},
 
 	getStandardTests: async function(access_token) {
@@ -316,12 +335,17 @@ module.exports = {
 	},
 
 	getDepthFirst: async function(seed, access_token){
+		var searchResults = new Object();
+
 		var baseURL = "/v1/recommendations?seed_tracks=";
 		
 		var popSongs = new Array();
+
+		var numberOfRecommendations = 0;
 		
 		for (var i = 0; i < numTracks; i++) {
 			var results = await spotify.getRecommendations(seed, numTracks, access_token);
+			numberOfRecommendations++;
 			var trackArray = results.tracks;
 			
 			if (trackArray){
@@ -331,7 +355,10 @@ module.exports = {
 			}
 		}
 		
-		return popSongs;
+		searchResults.tracks = popSongs;
+		searchResults.numberOfRecommendations = numberOfRecommendations;
+
+		return searchResults;
 	},
 
 	getDepthFirstTests: async function(access_token) {

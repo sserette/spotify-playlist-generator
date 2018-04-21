@@ -12,13 +12,6 @@ var insertSearchTableHeader = function(table){
 	createAndAppend(headerRow, "Album");
 	createAndAppend(headerRow, "Artists");
 	createAndAppend(headerRow, "Popularity");
-	//createAndAppend(headerRow, "Acousticness");
-	//createAndAppend(headerRow, "Danceability");
-	//createAndAppend(headerRow, "Energy");
-	//createAndAppend(headerRow, "Instrumentalness");
-	//createAndAppend(headerRow, "Mode");
-	//createAndAppend(headerRow, "Tempo");
-	//createAndAppend(headerRow, "Valence");
 }
 
 var clearTable = function(tableName){
@@ -31,7 +24,7 @@ var clearTable = function(tableName){
 var populateSearchTable = function(tableName, data){
 	var table = document.getElementById(tableName);
 
-	for (var index = 0; index < data.length; index++)
+	for (var index = 0; index < data.tracks.length; index++)
 	{
 		var row = table.insertRow(table.rows.length);
 
@@ -40,46 +33,31 @@ var populateSearchTable = function(tableName, data){
 		var cell3 = row.insertCell(2);
 		var cell4 = row.insertCell(3);
 
-		cell1.innerHTML = data[index].name;
-		cell2.innerHTML = data[index].album.name;
+		cell1.innerHTML = data.tracks[index].name;
+		cell2.innerHTML = data.tracks[index].album.name;
 
-		var artistArray = data[index].artists;
+		var artistArray = data.tracks[index].artists;
 		for (var i = 0; i < artistArray.length; i++) {
 			cell3.innerHTML += artistArray[i].name;
 			if (i < artistArray.length - 1)
 			cell3.innerHTML += ", ";
 		}
 
-		cell4.innerHTML = data[index].popularity;
-
-		//var cell5 = row.insertCell(4);
-		//var cell6 = row.insertCell(5);
-		//var cell7 = row.insertCell(6);
-		//var cell8 = row.insertCell(7);
-		//var cell9 = row.insertCell(8);
-		//var cell10 = row.insertCell(9);
-		//var cell11 = row.insertCell(10);
-
-		//cell5.innerHTML = data[index].acousticness;
-		//cell6.innerHTML = data[index].danceability;
-		//cell7.innerHTML = data[index].energy;
-		//cell8.innerHTML = data[index].instrumentalness;
-		//cell9.innerHTML = data[index].mode;
-		//cell10.innerHTML = data[index].tempo;
-		//cell11.innerHTML = data[index].valence;
+		cell4.innerHTML = data.tracks[index].popularity;
 	}
 
 	var totalPopularity = 0;
 
-	for (var i = 0; i < data.length; i++)
-		totalPopularity += data[i].popularity;
+	for (var i = 0; i < data.tracks.length; i++)
+		totalPopularity += data.tracks[i].popularity;
 
 	row = table.insertRow(table.rows.length);
 	var footer = row.insertCell(0);
 	footer = row.insertCell(1);
 	footer = row.insertCell(2);
+	footer.innerHTML = "<b>" + "Average popularity: " + "</b>";
 	footer = row.insertCell(3);
-	var averagePopularity = totalPopularity / data.length;
+	var averagePopularity = totalPopularity / data.tracks.length;
 	footer.innerHTML = "<b>" + averagePopularity + "</b>";
 
 	//table header
@@ -91,26 +69,83 @@ var insertTestTableHeader = function(table){
 	var headerRow = header.insertRow(0);  
 
 	createAndAppend(headerRow, "Initial Song");
-	createAndAppend(headerRow, "Result Songs");
-	createAndAppend(headerRow, "Average Popularity");
+	createAndAppend(headerRow, "Initial Song Popularity");
+	createAndAppend(headerRow, "Initial Song Danceability");
+	createAndAppend(headerRow, "Initial Song Energy");
+	createAndAppend(headerRow, "Initial Song Speechiness");
+	createAndAppend(headerRow, "Initial Song Acousticness");
+	createAndAppend(headerRow, "Initial Song Instrumentalness");
+	createAndAppend(headerRow, "Initial Song Liveness");
+	createAndAppend(headerRow, "Initial Song Valence");
+
+	createAndAppend(headerRow, "Result Song");
+	createAndAppend(headerRow, "Result Song Popularity");
+	createAndAppend(headerRow, "Result Song Danceability");
+	createAndAppend(headerRow, "Result Song Energy");
+	createAndAppend(headerRow, "Result Song Speechiness");
+	createAndAppend(headerRow, "Result Song Acousticness");
+	createAndAppend(headerRow, "Result Song Instrumentalness");
+	createAndAppend(headerRow, "Result Song Liveness");
+	createAndAppend(headerRow, "Result Song Valence");
+
+	createAndAppend(headerRow, "Number of Recommendations");
 }
 
 var populateTestTable = function(tableName, data){
 	var table = document.getElementById(tableName);
 
+	console.log(data);
+
 	for (var index = 0; index < data.length; index++)
 	{
-		var row = table.insertRow(table.rows.length);
+		for (var trackNum = 0; trackNum < data[index].length; trackNum++) {
+			var row = table.insertRow(table.rows.length);
 
-		var cell1 = row.insertCell(0);
-		var cell2 = row.insertCell(1);
-		var cell3 = row.insertCell(2);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+			var cell7 = row.insertCell(6);
+			var cell8 = row.insertCell(7);
+			var cell9 = row.insertCell(8);
+			var cell10 = row.insertCell(9);
+			var cell11 = row.insertCell(10);
+			var cell12 = row.insertCell(11);
+			var cell13 = row.insertCell(12);
+			var cell14 = row.insertCell(13);
+			var cell15 = row.insertCell(14);
+			var cell16 = row.insertCell(15);
+			var cell17 = row.insertCell(16);
+			var cell18 = row.insertCell(17);
+			var cell19 = row.insertCell(18);
+	
+			cell1.innerHTML = data[index][trackNum].initialTrack;
+			cell2.innerHTML = data[index][trackNum].initialTrackPopularity;
+			cell3.innerHTML = data[index][trackNum].initialTrackDanceability;
+			cell4.innerHTML = data[index][trackNum].initialTrackEnergy;
+			cell5.innerHTML = data[index][trackNum].initialTrackSpeechiness;
+			cell6.innerHTML = data[index][trackNum].initialTrackAcousticness;
+			cell7.innerHTML = data[index][trackNum].initialTrackInstrumentalness;
+			cell8.innerHTML = data[index][trackNum].initialTrackLiveness;
+			cell9.innerHTML = data[index][trackNum].initialTrackValence;
+	
+			cell10.innerHTML = data[index][trackNum].resultTrack;
+			cell11.innerHTML = data[index][trackNum].resultTrackPopularity;
+			cell12.innerHTML = data[index][trackNum].resultTrackDanceability;
+			cell13.innerHTML = data[index][trackNum].resultTrackEnergy;
+			cell14.innerHTML = data[index][trackNum].resultTrackSpeechiness;
+			cell15.innerHTML = data[index][trackNum].resultTrackAcousticness;
+			cell16.innerHTML = data[index][trackNum].resultTrackInstrumentalness;
+			cell17.innerHTML = data[index][trackNum].resultTrackLiveness;
+			cell18.innerHTML = data[index][trackNum].resultTrackValence;
 
-		cell1.innerHTML = data[index].initialTrack;
-		cell2.innerHTML = data[index].resultTracks;
-		cell3.innerHTML = data[index].averagePopularity;
+			cell19.innerHTML = data[index][trackNum].numberOfRecommendations;
+		}
 	}
 
+	/*
 	var totalPopularity = 0;
 
 	for (var i = 0; i < data.length; i++)
@@ -122,6 +157,7 @@ var populateTestTable = function(tableName, data){
 	footer = row.insertCell(2);
 	var averagePopularity = totalPopularity / data.length;
 	footer.innerHTML = "<b>" + averagePopularity + "</b>";
+	*/
 
 	//table header
 	insertTestTableHeader(table);
