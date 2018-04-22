@@ -299,7 +299,7 @@ $(document).ready(function() {
 		*/
 	});
 
-	$("#test-button").click(function() {
+	$("#test-button").click(async function() {
 		//setDisplayOfClassElements("search-tables", "hidden");
 		//setDisplayOfClassElements("test-tables", "visible");
 		$(".search-tables").hide();
@@ -309,15 +309,15 @@ $(document).ready(function() {
 		clearTable("testing-search-table");
 		clearTable("testing-a-star-mean-popularity-table");
 
-		$.get("/api/ai/recommend-standard-tests", function(data) {	
+		await $.get("/api/ai/recommend-standard-tests", function(data) {	
 			populateTestTable("testing-search-table", data);
-		});
+		});	
 
-		$.get("/api/ai/recommend-depth-first-tests", function(data) {	
+		await $.get("/api/ai/recommend-depth-first-tests", function(data) {	
 			populateTestTable("testing-depth-first-table", data);
 		});
 
-		$.get("/api/ai/recommend-a-star-mean-popularity-tests", function(data) {	
+		await $.get("/api/ai/recommend-a-star-mean-popularity-tests", function(data) {	
 			populateTestTable("testing-a-star-mean-popularity-table", data);
 		});
 	});

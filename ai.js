@@ -2,75 +2,42 @@ const spotify = require(`${process.cwd()}/spotify`);
 
 var numTracks = 10;
 
+var addTestTrackToArray = async function(array, id, access_token) {
+	var track = await spotify.getTrack(id, access_token);
+	array.push(track);
+
+	return array;
+}
+
 var getTestTracks = async function(access_token) {
 	var tracks = new Array();
 
 	//Classic Rock tracks
-	var track = await spotify.getTrack("7BY005dacJkbO6EPiOh2wb", access_token); //The Animals - House of the Rising Sun
-	tracks.push(track);
-
-	track = await spotify.getTrack("5MMnwYs0hIxkENRsbkWJ2G", access_token); //Deep Purple - Smoke On the Water
-	tracks.push(track);
-	/*
-	track = await spotify.getTrack("6J17MkMmuzBiIOjRH6MOBZ", access_token); //AC/DC - Rock and Roll Ain't Noise Pollution
-	tracks.push(track);
+	tracks = await addTestTrackToArray(tracks, "7BY005dacJkbO6EPiOh2wb", access_token); //The Animals - House of the Rising Sun
 	
-	track = await spotify.getTrack("3LTMnFa0hhwisyq6ILahyj", access_token); //Dire Straits - Sultans Of Swing
-	tracks.push(track);
+	tracks = await addTestTrackToArray(tracks, "5MMnwYs0hIxkENRsbkWJ2G", access_token); //Deep Purple - Smoke On the Water
+	
+	tracks = await addTestTrackToArray(tracks, "6J17MkMmuzBiIOjRH6MOBZ", access_token); //AC/DC - Rock and Roll Ain't Noise Pollution
+	
+	tracks = await addTestTrackToArray(tracks, "3LTMnFa0hhwisyq6ILahyj", access_token); //Dire Straits - Sultans Of Swing
 
-	track = await spotify.getTrack("1wXE6zvNWRz8GuMfEUgETz", access_token); //Nazareth - Hair Of The Dog
-	tracks.push(track);
+	tracks = await addTestTrackToArray(tracks, "1wXE6zvNWRz8GuMfEUgETz", access_token); //Nazareth - Hair Of The Dog
 
 	//Country
-	track = await spotify.getTrack("477pWnF7WFWb9Qs6g8rs4J", access_token); //Brantley Gilbert - Bottoms Up
-	tracks.push(track);
+	tracks = await addTestTrackToArray(tracks, "477pWnF7WFWb9Qs6g8rs4J", access_token); //Brantley Gilbert - Bottoms Up
 	
-	track = await spotify.getTrack("1TwLKNsCnhi1HxbIi4bAW0", access_token); //Sam Hunt - House Party
-	tracks.push(track);
+	tracks = await addTestTrackToArray(tracks, "1TwLKNsCnhi1HxbIi4bAW0", access_token); //Sam Hunt - House Party
 
-	track = await spotify.getTrack("1zWZvrk13cL8Sl3VLeG57F", access_token); //Thomas Rhett - T-Shirt
-	tracks.push(track);
+	tracks = await addTestTrackToArray(tracks, "1zWZvrk13cL8Sl3VLeG57F", access_token); //Thomas Rhett - T-Shirt
+
+	tracks = await addTestTrackToArray(tracks, "6CyJlVAEFlNdpggOLanytL", access_token); //Chris Young - Hangin' On
+
+	tracks = await addTestTrackToArray(tracks, "3YZ5TNGA10oTLaADq4zuNV", access_token); //Lady Antebellum - Heart Break
 
 	//Rap
-	track = await spotify.getTrack("2XW4DbS6NddZxRPm5rMCeY", access_token); //Drake - God's Plan
-	tracks.push(track);
+	tracks = await addTestTrackToArray(tracks, "2XW4DbS6NddZxRPm5rMCeY", access_token); //Drake - God's Plan
 
-	track = await spotify.getTrack("4rv1ww0dUwFZcDVPqhcOcX", access_token); //The Weeknd - Try Me
-	tracks.push(track);
-
-	track = await spotify.getTrack("6tarvNiKnEjYMj1VZhlDqR", access_token); //Lil Yachty, Trippie Redd - 66
-	tracks.push(track);
-	
-	//Electronic/Dance
-	track = await spotify.getTrack("6OYjreGuIk79v0n5IvIy96", access_token); //Dropgun - Nobody
-	tracks.push(track);
-
-	track = await spotify.getTrack("1bA2ZK7CFxEMnyn1dWP2jp", access_token); //Bakermat - Baby
-	tracks.push(track);
-
-	track = await spotify.getTrack("5vMAKJ78vhNtvbIKz4yeIY", access_token); //Don Diablo - Cutting Shapes
-	tracks.push(track);
-
-	//80s
-	track = await spotify.getTrack("4YR6Dextuoc3I8nJ0XgzKI", access_token); //Kenny Loggins - Footloose
-	tracks.push(track);
-
-	track = await spotify.getTrack("46RVKt5Edm1zl0rXhPJZxz", access_token); //Men At Work - Down Under
-	tracks.push(track);
-
-	//Classical
-	track = await spotify.getTrack("69T81Cyvg4MekLcbh8DOwj", access_token); //Ludwig van Beethoven - Beethoven: Symphony No. 3 in E-Flat Major...
-	tracks.push(track);
-
-	track = await spotify.getTrack("0keXPud9gaE9LIW7ZaWW4s", access_token); //John Danyel, Karl Nyhlin - Pavan
-	tracks.push(track);
-
-	track = await spotify.getTrack("49P5YsdjSDcF5bSNYfdZEF", access_token); //Antoine de Fevin, Paolo Cherici - Sancta Trinitas
-	tracks.push(track);
-
-	track = await spotify.getTrack("0AyptO1NDrEW51CeG46JvZ", access_token); //Alessandro Piccinini, Francesca Torelli - Toccata XX
-	tracks.push(track);
-	*/
+	tracks = await addTestTrackToArray(tracks, "7yotKA30dwTKNEGomV9ZsI", access_token); //J. Cole - KOD
 
 	return tracks;
 }
@@ -304,7 +271,8 @@ var runTestsGivenFunction = async function(func, access_token) {
 		var ResultsAudioFeatures = await spotify.getAudioFeaturesMultipleTracks(results.tracks, access_token);
 		var tableRows = getTestTableRows(currentTrack, currentTrackAudioFeatures, results.tracks, ResultsAudioFeatures, results.numberOfRecommendations);
 		data.push(tableRows);
-		sleep(3000);
+		console.log("Song number " + i + " done.");
+		sleep(50);
 	}
 
 	return data;
