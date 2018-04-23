@@ -1,6 +1,6 @@
 const spotify = require(`${process.cwd()}/spotify`);
 
-var numTracks = 10;
+var numTracks = 20;
 
 var addTestTrackToArray = async function(array, id, access_token) {
 	var track = await spotify.getTrack(id, access_token);
@@ -12,32 +12,48 @@ var addTestTrackToArray = async function(array, id, access_token) {
 var getTestTracks = async function(access_token) {
 	var tracks = new Array();
 
-	//Classic Rock tracks
-	tracks = await addTestTrackToArray(tracks, "7BY005dacJkbO6EPiOh2wb", access_token); //The Animals - House of the Rising Sun
-	
+	//Classic Rock
+/*	tracks = await addTestTrackToArray(tracks, "7BY005dacJkbO6EPiOh2wb", access_token); //The Animals - House of the Rising Sun
 	tracks = await addTestTrackToArray(tracks, "5MMnwYs0hIxkENRsbkWJ2G", access_token); //Deep Purple - Smoke On the Water
-	
 	tracks = await addTestTrackToArray(tracks, "6J17MkMmuzBiIOjRH6MOBZ", access_token); //AC/DC - Rock and Roll Ain't Noise Pollution
-	
 	tracks = await addTestTrackToArray(tracks, "3LTMnFa0hhwisyq6ILahyj", access_token); //Dire Straits - Sultans Of Swing
-
 	tracks = await addTestTrackToArray(tracks, "1wXE6zvNWRz8GuMfEUgETz", access_token); //Nazareth - Hair Of The Dog
-
+*/
 	//Country
-	tracks = await addTestTrackToArray(tracks, "477pWnF7WFWb9Qs6g8rs4J", access_token); //Brantley Gilbert - Bottoms Up
-	
+/*	tracks = await addTestTrackToArray(tracks, "477pWnF7WFWb9Qs6g8rs4J", access_token); //Brantley Gilbert - Bottoms Up
 	tracks = await addTestTrackToArray(tracks, "1TwLKNsCnhi1HxbIi4bAW0", access_token); //Sam Hunt - House Party
-
 	tracks = await addTestTrackToArray(tracks, "1zWZvrk13cL8Sl3VLeG57F", access_token); //Thomas Rhett - T-Shirt
-
 	tracks = await addTestTrackToArray(tracks, "6CyJlVAEFlNdpggOLanytL", access_token); //Chris Young - Hangin' On
-
 	tracks = await addTestTrackToArray(tracks, "3YZ5TNGA10oTLaADq4zuNV", access_token); //Lady Antebellum - Heart Break
 
 	//Rap
 	tracks = await addTestTrackToArray(tracks, "2XW4DbS6NddZxRPm5rMCeY", access_token); //Drake - God's Plan
+/*	tracks = await addTestTrackToArray(tracks, "7yotKA30dwTKNEGomV9ZsI", access_token); //J. Cole - KOD
+	tracks = await addTestTrackToArray(tracks, "6n4U3TlzUGhdSFbUUhTvLP", access_token); //Migos, Drake - Walk It Talk It
+	tracks = await addTestTrackToArray(tracks, "2gTYVoQCUh0QNUaFix01ld", access_token); //Nicki Minaj - Chun-Li
+	tracks = await addTestTrackToArray(tracks, "17Yq72h0p15OhCbZ5lJ5gd", access_token); //Cardi B - Bickenhead
+*/
+	//Pop
+	
+/*	tracks = await addTestTrackToArray(tracks, "5SxkdsY1ufZzoq9iXceLw9", access_token); //Ariana Grande - No Tears Left To Cry
+	tracks = await addTestTrackToArray(tracks, "5ChkMS8OtdzJeqyybCc9R5", access_token); //Michael Jackson - Billie Jean
+	tracks = await addTestTrackToArray(tracks, "36ux3YuUsGTWPT8fXclS45", access_token); //Katy Perry, Kanye West - E.T. - feat. Kanye West
+	tracks = await addTestTrackToArray(tracks, "6ECp64rv50XVz93WvxXMGF", access_token); //Maroon 5 - This Love
+	tracks = await addTestTrackToArray(tracks, "4fixebDZAVToLbUCuEloa2", access_token); //Britney Spears - Womanizer
 
-	tracks = await addTestTrackToArray(tracks, "7yotKA30dwTKNEGomV9ZsI", access_token); //J. Cole - KOD
+	//Electronic/Dance
+	tracks = await addTestTrackToArray(tracks, "6VrCmhRBFnuGKmtNfk4jDs", access_token); //Marshmello, Lil Peep - Spotlight
+	tracks = await addTestTrackToArray(tracks, "5EwwwdsQfKI8ZnFG93j5Zu", access_token); //Martin Garrix, Matisse, Sadko - Forever
+	tracks = await addTestTrackToArray(tracks, "4h8VwCb1MTGoLKueQ1WgbD", access_token); //Avicii - Wake Me Up
+	tracks = await addTestTrackToArray(tracks, "6JyuJFedEvPmdWQW0PkbGJ", access_token); //Skrillex, Rock Ross - Purple Lamborghini (with Rick Ross)
+	tracks = await addTestTrackToArray(tracks, "16s0TT9GxYo78ln1iHZLS1", access_token); //Black Caviar - Lady (Hear Me Tonight)
+
+	//Jazz
+	tracks = await addTestTrackToArray(tracks, "1YQWosTIljIvxAgHWTp7KP", access_token); //The Dave Brubeck Quartet - Take Five
+	tracks = await addTestTrackToArray(tracks, "3GOZbK2epuHzCt5YvvVFHO", access_token); //Kenny Dorham - Alone Together
+*/	tracks = await addTestTrackToArray(tracks, "0q4SJUYOp0Er9fvREdDyDv", access_token); //Sun Ra - Enlightenment
+	tracks = await addTestTrackToArray(tracks, "3hY3MPL9hAITPgVfiVlL5K", access_token); //Joe Lovan0 - Stella By Starlight
+	tracks = await addTestTrackToArray(tracks, "1Lh7U5c3EvLBb6lSgHVFlR", access_token); //Charlie Parker - All The Things You Are
 
 	return tracks;
 }
@@ -272,7 +288,7 @@ var runTestsGivenFunction = async function(func, access_token) {
 		var tableRows = getTestTableRows(currentTrack, currentTrackAudioFeatures, results.tracks, ResultsAudioFeatures, results.numberOfRecommendations);
 		data.push(tableRows);
 		console.log("Song number " + i + " done.");
-		sleep(50);
+		sleep(3000);
 	}
 
 	return data;
