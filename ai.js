@@ -1,6 +1,6 @@
 const spotify = require(`${process.cwd()}/spotify`);
 
-var numTracks = 20;
+var numTracks = 10;
 
 var addTestTrackToArray = async function(array, id, access_token) {
 	var track = await spotify.getTrack(id, access_token);
