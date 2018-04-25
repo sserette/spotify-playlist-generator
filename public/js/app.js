@@ -278,17 +278,17 @@ $(document).ready(function() {
 		});*/
 
 		$.get("/api/ai/recommend-standard?seed=" + currTrackID, function(data) {
-			standardTracks = data;
+			standardTracks = data.tracks;
 			populateSearchTable("search-table", data);
 		});
 		
 		$.get("/api/ai/recommend-depth-first?seed=" + currTrackID, function(data) {
-			depthFirstTracks = data;
+			depthFirstTracks = data.tracks;
 			populateSearchTable("depth-first-table", data);
 		});
 
 		$.get("/api/ai/recommend-a-star-mean-popularity?seed=" + currTrackID, function(data) {
-			aStarTracks = data;
+			aStarTracks = data.tracks;
 			populateSearchTable("a-star-mean-popularity-table", data);
 		});
 
