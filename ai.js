@@ -13,12 +13,12 @@ var getTestTracks = async function(access_token) {
 	var tracks = new Array();
 
 	//Classic Rock
-/*	tracks = await addTestTrackToArray(tracks, "7BY005dacJkbO6EPiOh2wb", access_token); //The Animals - House of the Rising Sun
+	tracks = await addTestTrackToArray(tracks, "7BY005dacJkbO6EPiOh2wb", access_token); //The Animals - House of the Rising Sun
 	tracks = await addTestTrackToArray(tracks, "5MMnwYs0hIxkENRsbkWJ2G", access_token); //Deep Purple - Smoke On the Water
 	tracks = await addTestTrackToArray(tracks, "6J17MkMmuzBiIOjRH6MOBZ", access_token); //AC/DC - Rock and Roll Ain't Noise Pollution
 	tracks = await addTestTrackToArray(tracks, "3LTMnFa0hhwisyq6ILahyj", access_token); //Dire Straits - Sultans Of Swing
 	tracks = await addTestTrackToArray(tracks, "1wXE6zvNWRz8GuMfEUgETz", access_token); //Nazareth - Hair Of The Dog
-*/
+
 	//Country
 /*	tracks = await addTestTrackToArray(tracks, "477pWnF7WFWb9Qs6g8rs4J", access_token); //Brantley Gilbert - Bottoms Up
 	tracks = await addTestTrackToArray(tracks, "1TwLKNsCnhi1HxbIi4bAW0", access_token); //Sam Hunt - House Party
