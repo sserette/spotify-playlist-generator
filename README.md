@@ -18,7 +18,7 @@ Student project for CIS 479 - Artificial Intelligence that generates Spotify pla
 4. Add desired playlists to Spotify account, or export results to a file. Change the file name of the exported file to have a .csv extension, and then open it through Microsoft Excel 
 
 ### Additional notes about testing and results:
-1. The top of the `ai.js` file contains the list of songs to be tested.
-2. The top of the `ai.js` file contains a variable for the number of tracks to be in the resulting playlist.
-3. Be careful when selecting playlist size and and test tracks, as the application can time out. Playlists of size 20 should only test a couple or a few songs at a time. Watch the console while testing; it outputs live feedback on the search. If the console stops output, or starts interleaving searches, then it must be restarted.
+1. The top of the `ai.js` file contains the list of songs to be tested. Comment/uncomment tracks to run tests for multiple initial tracks.
+2. The top of the `ai.js` file contains a variable for the number of tracks to be in the resulting playlist. Change this variable to run tests for a desired playlist size.
+3. Be careful when selecting playlist size and and test tracks, as the application can time out or be rate limited. Playlists of size 20 should only test a couple or a few songs at a time. Watch the console while testing; it outputs live feedback on the search. If the console stops output, or starts interleaving searches, then it must be restarted.
 4. Raw data for the project test results can be found in the `test data` subfolder at the root directory.
