@@ -11,7 +11,7 @@ Student project for CIS 479 - Artificial Intelligence that generates Spotify pla
 2. Run `npm start` within the root directory
 3. Navigate to [localhost:8080](http://localhost:8080) in any web browser
 
-###Test the application
+### Test the application
 1. Provide proper Spotify authentication when requested.
 2. Type in the search bar for tracks, or click the test button (see notes about testing below). Note that the search bar uses a Typeahead feature. The desired song must be clicked on.
 3. Wait for results to appear in all search tables.
